@@ -1,0 +1,203 @@
+/* App-specific demo styles */
+
+/* Backdrop content styling */
+.backdrop-content {
+  min-height: 100%;
+  padding: 20px;
+  padding-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.backdrop-header {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.backdrop-header h1 {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.backdrop-header p {
+  margin: 0;
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+.backdrop-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.backdrop-actions button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: background 0.2s;
+}
+
+.backdrop-actions button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.backdrop-actions button:active {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.backdrop-section {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.backdrop-section h2 {
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+}
+
+.backdrop-section p {
+  margin: 0 0 8px;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.backdrop-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.backdrop-tile {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+  min-height: 80px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.backdrop-tile:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.backdrop-tile:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Card header styling */
+.card-header-content h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.card-header-content .subtitle {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+/* Card body styling */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.info-section h3 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.info-section p {
+  margin: 0 0 12px;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.info-section ul {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.8;
+  opacity: 0.8;
+}
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  padding: 6px 12px;
+  background: var(--system-background-secondary);
+  border-radius: 16px;
+  font-size: 0.85rem;
+}
+
+/* Points of Interest list */
+.poi-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.poi-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--system-background-secondary);
+  border-radius: 12px;
+}
+
+.poi-icon {
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.poi-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.poi-info strong {
+  font-size: 0.95rem;
+}
+
+.poi-info span {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+/* Bottom spacer to ensure enough scroll room */
+.spacer {
+  height: 100px;
+  flex-shrink: 0;
+}
