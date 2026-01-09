@@ -14,9 +14,13 @@ const TRAY_OPEN_HEIGHT = 320;
 
 export function Tray(props) {
   let wrapperRef;
+  let backdropRef;
+  let sheetRef;
   
   const [position, setPosition] = createSignal(TrayPosition.Docked);
   const [isSliding, setIsSliding] = createSignal(false);
+  // Track the visible card height to set clip-path
+  const [cardTop, setCardTop] = createSignal(0);
   
   const resolvedBackdrop = children(() => props.backdrop);
   const resolvedChildren = children(() => props.children);
@@ -49,7 +53,16 @@ export function Tray(props) {
     return TrayPosition.Scrolling;
   };
   
+  // Update the clip-path based on where the card is
+  const updateCardTop = () => {
+    if (!sheetRef || !wrapperRef) return;
+    const sheetRect = sheetRef.getBoundingClientRect();
+    setCardTop(Math.max(0, sheetRect.top));
+  };
+  
   const handleScroll = () => {
+    updateCardTop();
+    
     if (isSliding()) return;
     const newPos = calculatePosition();
     if (newPos !== position()) {
@@ -80,6 +93,7 @@ export function Tray(props) {
     if (!smooth) {
       wrapperRef.scrollTop = targetScroll;
       setPosition(targetPosition);
+      updateCardTop();
       return Promise.resolve();
     }
     
@@ -91,6 +105,7 @@ export function Tray(props) {
       let stableCount = 0;
       
       const check = () => {
+        updateCardTop();
         const curr = wrapperRef.scrollTop;
         if (Math.abs(curr - targetScroll) < 2) {
           setIsSliding(false);
@@ -127,12 +142,17 @@ export function Tray(props) {
     if (wrapperRef) {
       wrapperRef.scrollTop = 0;
       setPosition(TrayPosition.Docked);
+      // Initial card top calculation
+      requestAnimationFrame(updateCardTop);
     }
+    
     wrapperRef?.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', updateCardTop);
   });
   
   onCleanup(() => {
     wrapperRef?.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('resize', updateCardTop);
   });
   
   createEffect(() => {
@@ -141,17 +161,24 @@ export function Tray(props) {
     }
   });
   
+  // Dynamic clip-path style to only capture touches on the card area
+  const wrapperStyle = () => ({
+    'clip-path': `inset(${cardTop()}px 0 0 0)`,
+    '-webkit-clip-path': `inset(${cardTop()}px 0 0 0)`,
+  });
+  
   return (
     <div class="tray-root">
-      {/* Backdrop - fixed behind everything */}
-      <div class="tray-backdrop">
+      {/* Backdrop - fixed behind everything, fully interactive */}
+      <div ref={backdropRef} class="tray-backdrop">
         {resolvedBackdrop()}
       </div>
       
-      {/* Scroll container for tray - overlays backdrop */}
+      {/* Scroll container - clipped to only the card area */}
       <div
         ref={wrapperRef}
         class="tray-wrapper"
+        style={wrapperStyle()}
         classList={{
           'sliding': isSliding(),
           [`tray-pos-${position()}`]: true,
@@ -164,7 +191,7 @@ export function Tray(props) {
         <div class="tray-spacer tray-spacer-open" />
         
         {/* The card area */}
-        <div class="tray-sheet">
+        <div ref={sheetRef} class="tray-sheet">
           {resolvedChildren()}
         </div>
       </div>

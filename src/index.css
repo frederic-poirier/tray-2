@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+html {
+  /* Prevent iOS text size adjustment */
+  -webkit-text-size-adjust: 100%;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -11,14 +16,19 @@ html, body {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent pull-to-refresh and bounce */
+  overscroll-behavior: none;
+  -webkit-overscroll-behavior: none;
 }
 
 #root {
   width: 100%;
   height: 100%;
+  /* iOS safe area handling */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
-/* Prevent pull-to-refresh on mobile */
-body {
-  overscroll-behavior-y: none;
+/* Prevent iOS tap highlight */
+* {
+  -webkit-tap-highlight-color: transparent;
 }
